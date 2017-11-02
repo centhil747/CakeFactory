@@ -19,6 +19,7 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
   }
 
+  // Will be used while displaying dish details under menu component
   onSelect(dish: Dish) {
     this.selectedDish = dish;
   }
