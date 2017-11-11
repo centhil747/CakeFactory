@@ -14,13 +14,14 @@ export class DishDetailsComponent implements OnInit {
   @Input()
   dish: Dish;
 
-  constructor(private dishservice: DishService,
+  constructor(private dishService: DishService,
     private route: ActivatedRoute,
     private location: Location) { }
 
   ngOnInit() {
     let id = +this.route.snapshot.params['id'];
-    this.dish = this.dishservice.getDish(id);
+    this.dishService.getDish(id)
+    .then(dish => this.dish = dish);
   }
 
   goBack(): void {
