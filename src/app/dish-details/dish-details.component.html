@@ -6,31 +6,31 @@ fxLayoutAlign.gt-md="space-around center"
 fxLayoutGap="10px"
 fxLayoutGap.xs="0">
 
-<div fxFlex="40">
-  <md-card *ngIf="dish">
-      <md-card-header>
-        <md-card-title>
-          <h3>{{dish.name | uppercase}}</h3>
-        </md-card-title>
-      </md-card-header>
-      <img md-card-image src={{dish.image}} alt={{dish.name}}>
-      <md-card-content>
-        <p>{{dish.description}}
-        </p>
-      </md-card-content>
-      <md-card-actions>
-        <button md-button [routerLink]="['/dishdetail', prev]"><span class="fa fa-chevron-left fa-lg"></span></button>
-        <button md-button (click)="goBack()">BACK</button>
-        <button md-button>LIKE</button>
-        <button md-button>SHARE</button>
-        <span class="flex-spacer"></span>
-        <button md-button [routerLink]="['/dishdetail', next]"><span class="fa fa-chevron-right fa-lg"></span></button>
-      </md-card-actions>
-    </md-card>
-</div>
+  <div fxFlex="40">
+    <md-card *ngIf="dish">
+        <md-card-header>
+          <md-card-title>
+            <h3>{{dish.name | uppercase}}</h3>
+          </md-card-title>
+        </md-card-header>
+        <img md-card-image src={{dish.image}} alt={{dish.name}}>
+        <md-card-content>
+          <p>{{dish.description}}
+          </p>
+        </md-card-content>
+        <md-card-actions>
+          <button md-button [routerLink]="['/dishdetail', prev]"><span class="fa fa-chevron-left fa-lg"></span></button>
+          <button md-button (click)="goBack()">BACK</button>
+          <button md-button>LIKE</button>
+          <button md-button>SHARE</button>
+          <span class="flex-spacer"></span>
+          <button md-button [routerLink]="['/dishdetail', next]"><span class="fa fa-chevron-right fa-lg"></span></button>
+        </md-card-actions>
+      </md-card>
+  </div>
 
-<div fxFlex="40">
-  <md-card *ngIf="dish">
+  <div fxFlex="40">
+    <md-card *ngIf="dish">
       <md-card-header>
         <md-card-title>
           <h3>Comments</h3>
@@ -44,6 +44,33 @@ fxLayoutGap.xs="0">
           </md-card-content>
       </md-card-content>
     </md-card>
-</div>
+    <md-card>
+      <md-card-content>
+        <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+            <md-input-container class="full-width"
+              dividerColor="{{(formErrors.author) ? 'warn' : 'primary'}}">
+              <input mdInput formControlName="author" placeholder="Name" type="text" required>
+              <md-hint>
+                <span [hidden]="!(formErrors.author)">
+                  {{formErrors.author}}</span>
+              </md-hint>
+            </md-input-container>
+            <p class="half-width">
+              <md-slider min="0" max="5" value="5" thumbLabel tickInterval="1" [(ngModel)]="rating">
+              </md-slider>
+            </p>
+            <md-input-container class="full-width"
+              dividerColor="{{(formErrors.comment) ? 'warn' : 'primary'}}">
+              <textarea mdInput formControlName="comment" placeholder="comment" rows=12></textarea>
+              <md-hint>
+                <span [hidden]="!(formErrors.comment)">
+                  {{formErrors.comment}}</span>
+              </md-hint>
+            </md-input-container>
+          <button type="submit" md-button class="background-primary text-floral-white" [disabled]="commentForm.invalid">Submit</button>
+        </form>
+      </md-card-content>
+    </md-card>
+  </div>
 
 </div>
