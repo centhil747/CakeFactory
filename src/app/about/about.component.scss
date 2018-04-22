@@ -1,0 +1,21 @@
+.card {
+  display: flex;
+  height:90px;
+  background: #FFFFFF;
+  align-items: center;
+  padding:10px;
+}
+.img-circle {
+  height:80px;
+  width:80px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 80%;
+  padding:10px;
+}
+.metaData {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding:10px;
+}
