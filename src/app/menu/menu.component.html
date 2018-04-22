@@ -14,7 +14,7 @@ fxLayoutGap="10px">
       <md-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish.id]">
     <img height="200px" src={{dish.image}} alt={{dish.name}}>
     <md-grid-tile-footer>
-      <h1 mat-line>{{dish.name | uppercase}}</h1>
+      <h1 md-line>{{dish.name | uppercase}}</h1>
     </md-grid-tile-footer>
   </md-grid-tile>
   </md-grid-list>
@@ -22,4 +22,5 @@ fxLayoutGap="10px">
   <div [hidden]="dishes">
     <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
   </div>
+  <!--<app-dish-details [dish]="selectedDish"></app-dish-details>-->
   </div>
