@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import 'rxjs/add/operator/switchMap';
@@ -44,14 +44,11 @@ export class DishDetailsComponent implements OnInit {
   constructor(private dishService: DishService,
     private route: ActivatedRoute,
     private location: Location,
-    private fb: FormBuilder) {
-      this.createForm();
-    }
+    private fb: FormBuilder,
+    @Inject('BaseURL') private BaseURL) {  }
 
   ngOnInit() {
-    let id = +this.route.snapshot.params['id'];
-    this.dishService.getDish(id)
-      .subscribe(dish => this.dish = dish);
+    this.createForm();
 
     this.dishService.getDishIds()
       .subscribe(dishIds => this.dishIds = dishIds);
