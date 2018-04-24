@@ -16,6 +16,7 @@ import { Location } from '@angular/common';
 })
 export class DishDetailsComponent implements OnInit { 
   dish: Dish;
+  dishcopy = null;
   dishIds: number[];
   prev: number;
   next: number;
@@ -23,6 +24,7 @@ export class DishDetailsComponent implements OnInit {
   comment: Comment;
   rating: number;
   date: string;
+  errMess: String;
   formErrors = {
     'author': '',
     'comment': ''
@@ -56,6 +58,11 @@ export class DishDetailsComponent implements OnInit {
     this.route.params
       .switchMap((params: Params) => this.dishService.getDish(+params['id']))
       .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+
+    this.route.params
+      .switchMap((params: Params) => { return this.dishService.getDish(+params['id']); })
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+          errmess => { this.dish = null; this.errMess = <any>errmess; });
   }
 
   setPrevNext(dishId: number) {
@@ -105,7 +112,9 @@ export class DishDetailsComponent implements OnInit {
     this.comment = this.commentForm.value;
     this.comment.date = new Date().toISOString();
     console.log(this.comment);
-    this.dish.comments.push(this.comment);
+    this.dishcopy.comments.push(this.comment);
+    this.dishcopy.save()
+      .subscribe(dish => { this.dish = dish; console.log(this.dish); });
     this.commentForm.reset({
       'author': '',
       'rating': 5,
