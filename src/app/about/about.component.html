@@ -53,12 +53,8 @@ fxLayoutGap="10px">
            </md-card>
  </div>
 
-  <div fxFlex>
-     <h2>Corporate Leadership</h2>
-     <p>Display the details of the corporate leaders here</p>
-  </div>
-
-  <div fxFlex>
+  <div fxFlex *ngIf="leaders" [@expand]>
+     <h2>Corporate Leadership</h2>  
     <!--<md-list>
       <md-list-item *ngFor="let leader of leaders">
           <button (click)="onEditBtnClick(row)" md-icon-button color="accent">
@@ -98,5 +94,8 @@ fxLayoutGap="10px">
     </div>
   </li>
 </ul>
+</div>
+<div [hidden]="leaders">
+    <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
 </div>
 </div>
