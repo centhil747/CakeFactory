@@ -1,8 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import 'rxjs/add/operator/switchMap';
-import { Dish } from '../shared/dish';
+import { Dish } from '../shared/dish'; 
 import {Comment} from '../shared/comment';
 
 import { DishService } from '../services/dish.service';
@@ -12,7 +13,20 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-dish-details',
   templateUrl: './dish-details.component.html',
-  styleUrls: ['./dish-details.component.scss']
+  styleUrls: ['./dish-details.component.scss'],
+  animations: [
+    trigger('visibility', [
+        state('shown', style({
+            transform: 'scale(1.0)',
+            opacity: 1
+        })),
+        state('hidden', style({
+            transform: 'scale(0.5)',
+            opacity: 0
+        })),
+        transition('* => *', animate('0.5s ease-in-out'))
+    ])
+  ]
 })
 export class DishDetailsComponent implements OnInit { 
   dish: Dish;
@@ -29,6 +43,7 @@ export class DishDetailsComponent implements OnInit {
     'author': '',
     'comment': ''
   };
+  visibility = 'shown';
 
   validationMessages = {
     'author': {
@@ -56,12 +71,9 @@ export class DishDetailsComponent implements OnInit {
       .subscribe(dishIds => this.dishIds = dishIds);
 
     this.route.params
-      .switchMap((params: Params) => this.dishService.getDish(+params['id']))
-      .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
-
-    this.route.params
-      .switchMap((params: Params) => { return this.dishService.getDish(+params['id']); })
-      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+      .switchMap((params: Params) => { this.visibility = 'hidden';
+          return this.dishService.getDish(+params['id']); })
+      .subscribe(dish => { this.visibility = 'shown'; this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
           errmess => { this.dish = null; this.errMess = <any>errmess; });
   }
 
