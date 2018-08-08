@@ -59,8 +59,7 @@ export class DishDetailsComponent implements OnInit {
   ngOnInit() {
     this.createForm();
 
-    this.dishService.getDishIds()
-      .subscribe(dishIds => this.dishIds = dishIds);
+    +
 
     this.route.params
       .switchMap((params: Params) => { this.visibility = 'hidden';
@@ -83,7 +82,7 @@ export class DishDetailsComponent implements OnInit {
     this.commentForm = this.fb.group({
       author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
       comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
-      rating: ['']
+      rating: 5
     });
     this.commentForm.valueChanges
     .subscribe(data => this.onValueChanged(data));
@@ -106,10 +105,6 @@ export class DishDetailsComponent implements OnInit {
         }
       }
     }
-  }
-
-  onInputChange(event: any) {
-
   }
 
   onSubmit() {

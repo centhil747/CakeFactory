@@ -3,13 +3,14 @@ fxLayout="column"
 fxLayoutGap="10px">
 
 <div fxFlex>
-       <div>
-          <h3>Contact Us</h3>
-          <hr>
-       </div>
+       
 </div>
 
-<div fxFlex>
+<div fxFlex >
+  <div>
+    <h3>Contact Us</h3>
+    <hr>
+  </div>
  <h3>Location Information</h3>
  <div fxLayout="column" fxLayout.gt-sm="row">
      <div fxFlex="50" fxFlexOffset="20px">
@@ -35,7 +36,7 @@ fxLayoutGap="10px">
      </div>
    </div>
  </div>
-  <div fxFlex fxFlexOffset="20px" class="form-size">
+  <div fxFlex fxFlexOffset="20px" class="form-size" [hidden]="spinner || displayFeedback">
     <h3>Send us your Feedback</h3>
     <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
       <p>
@@ -93,5 +94,22 @@ fxLayoutGap="10px">
       </p>
       <button type="submit" md-button class="background-primary text-floral-white" [disabled]="feedbackForm.invalid">Submit</button>
     </form>
+  </div>
+  <div *ngIf="spinner">
+    <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+  <div *ngIf="displayFeedback && submittedFeedback" [@expand]>
+    <md-list>
+      <h3>Your Submission</h3>
+      <md-list-item>
+        <p md-line>First Name:&nbsp;{{ submittedFeedback.firstname }}</p>
+        <p md-line>Last Name:&nbsp;{{ submittedFeedback.lastname }}</p>
+        <p md-line>Tel. Number:&nbsp;{{ feedback.telnum }}</p>
+        <p md-line>Email:&nbsp;{{ feedback.email }}</p>
+        <p md-line>Contact You?:&nbsp;{{ feedback.agree }}</p>
+        <p md-line>How?:&nbsp;{{ feedback.contacttype }}</p>
+        <p md-line>Feedback:&nbsp;{{ feedback.message }}</p>
+      </md-list-item>
+    </md-list>
   </div>
 </div>
